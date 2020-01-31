@@ -6,8 +6,6 @@ exports.up = async function(knex) {
       .notNullable()
       .unique();
     tbl.string('password', 255).notNullable();
-    tbl.string('first_name', 128);
-    tbl.string('last_name', 128);
   });
 
   await knex.schema.createTable('children', tbl => {
@@ -15,7 +13,7 @@ exports.up = async function(knex) {
     tbl.string('first_name', 128).notNullable();
     tbl.string('last_name', 128).notNullable();
     tbl
-      .integer('parents_id')
+      .integer('users_id')
       .unsigned()
       .references('id')
       .inTable('users');
