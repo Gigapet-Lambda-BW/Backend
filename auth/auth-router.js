@@ -17,7 +17,7 @@ router.post('/register', async (req, res) => {
     password: req.body.password,
   };
   try {
-    const saved = await authModel.add(saved);
+    const saved = await authModel.add(user);
     res.status(201).json(saved);
   } catch (err) {
     res.status(500).json({ errorMessage: 'server error registering user' });
@@ -28,7 +28,7 @@ router.post('/login', async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await authModel.findBy({ username });
+    const user = await authModel.findBy({ username }).first();
 
     const passwordCheck = await bcrypt.compare(password, user.password);
 
