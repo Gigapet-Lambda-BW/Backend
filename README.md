@@ -14,4 +14,10 @@ base endpoint, it should display
 - requires:
     1. username
     1. password
+- returns -> token and username
+
+## Login Endpoint
+
+`https://gigapet-bw-7.herokuapp.com/api/auth/login`  
+
 
