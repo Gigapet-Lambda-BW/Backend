@@ -14,7 +14,6 @@ router.post('/register', async (req, res) => {
   if (!password) {
     return res.status(400).json({ message: 'password is required' });
   }
-  password = await bcrypt.hash(password, 14);
 
   const user = {
     username: username,
@@ -24,6 +23,7 @@ router.post('/register', async (req, res) => {
     const saved = await authModel.add(user);
     res.status(201).json(saved);
   } catch (err) {
+    console.log(err);
     res.status(500).json({ errorMessage: 'server error registering user' });
   }
 });
