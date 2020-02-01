@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "test-server": "cross-env NODE_ENV=development nodemon -r dotenv/config index.js",
+    "test-server": "cross-env NODE_ENV=test nodemon -r dotenv/config index.js",
     "test": "cross-env jest NODE_ENV=test --verbose --watch"
   },
   "repository": {
