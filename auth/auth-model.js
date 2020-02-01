@@ -35,9 +35,10 @@ async function add(user) {
 }
 
 async function update(id, user) {
-  const [userId] = await db('users')
+
+  await db('users')
     .where({ id })
     .update(user);
 
-  return findById(userId);
+  return findById(id);
 }
