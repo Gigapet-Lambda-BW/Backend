@@ -29,6 +29,12 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+  if (!req.body.username) {
+    return res.status(400).json({ message: 'username required for  login' });
+  }
+  if (!req.body.password) {
+    return res.status(400).json({ message: 'password required for login' });
+  }
   try {
     const { username, password } = req.body;
 
@@ -48,9 +54,7 @@ router.post('/login', async (req, res) => {
         }
       );
 
-      res
-        .status(200)
-        .json({ token: token, message: `greetings ${user.username}` });
+      res.status(200).json({ token: token, username: user.username });
     } else {
       res.status(401).json({ message: 'invalid user credentials' });
     }
