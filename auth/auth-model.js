@@ -27,15 +27,18 @@ function findById(id) {
 }
 
 async function add(user) {
+  user.password = await bcrypt.hash(user.password, 14);
+
   const [id] = await db('users').insert(user);
 
   return findById(id);
 }
 
 async function update(id, user) {
-  const [userId] = await db('users')
+
+  await db('users')
     .where({ id })
     .update(user);
 
-  return findById(userId);
+  return findById(id);
 }
