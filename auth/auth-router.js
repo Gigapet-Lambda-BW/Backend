@@ -6,15 +6,19 @@ const secrets = require('../config/secrets');
 const authModel = require('./auth-model');
 
 router.post('/register', async (req, res) => {
-  if (!req.body.username) {
+  let { username, password } = req.body;
+
+  if (!username) {
     return res.status(400).json({ message: 'username is required' });
   }
-  if (!req.body.password) {
+  if (!password) {
     return res.status(400).json({ message: 'password is required' });
   }
+  password = await bcrypt.hash(password, 14);
+
   const user = {
-    username: req.body.username,
-    password: req.body.password,
+    username: username,
+    password: password,
   };
   try {
     const saved = await authModel.add(user);
