@@ -14,7 +14,7 @@ exports.up = async function(knex) {
     tbl.string('last_name', 128).notNullable();
     tbl
       .integer('users_id')
-      .unsigned()
+
       .references('id')
       .inTable('users');
   });
@@ -24,7 +24,7 @@ exports.up = async function(knex) {
     tbl.string('name', 128).notNullable();
     tbl
       .integer('users_id')
-      .unsigned()
+
       .references('id')
       .inTable('users');
   });
@@ -34,22 +34,22 @@ exports.up = async function(knex) {
     tbl.string('name', 128).notNullable();
     tbl
       .integer('users_id')
-      .unsigned()
+
       .references('id')
       .inTable('users');
     tbl
       .integer('categories_id')
-      .unsigned()
+
       .references('id')
       .inTable('categories');
   });
 
   await knex.schema.createTable('entries', tbl => {
     tbl.increments('id');
-    tbl.datetime('date');
+    tbl.date('date');
     tbl
       .integer('foods_id')
-      .unsigned()
+
       .references('id')
       .inTable('foods');
   });
