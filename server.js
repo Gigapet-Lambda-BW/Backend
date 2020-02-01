@@ -11,7 +11,7 @@ server.use(express.json());
 
 server.use('/api/auth', authRouter);
 
-server.use('/', (req, res) => {
+server.get('/', (req, res) => {
   res.send('Gigapet 7 is alive!');
 });
 
