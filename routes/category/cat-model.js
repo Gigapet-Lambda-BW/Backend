@@ -1,9 +1,10 @@
-const db = require('../data/db-config');
+const db = require('../../data/db-config');
 
 module.exports = {
   findCategories,
   findCategoryById,
   insertCategory,
+  updateCategory,
 };
 
 function findCategories(id) {
@@ -28,3 +29,18 @@ async function insertCategory(category, userId) {
 
   return findCategoryById(userId, id);
 }
+
+async function updateCategory(category, id, catId) {
+  await db('categories')
+    .where({ id })
+    .update(category);
+
+  return findCategoryById(id, catId);
+}
+
+//! FK constraint will not let this occur.
+// function deleteCategory(id) {
+//   return db('categories')
+//     .where({ id })
+//     .del();
+//}
