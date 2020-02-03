@@ -15,4 +15,17 @@ describe('categories calls', () => {
     const res = await petModel.findCategoryById(1, 1);
     expect(res).toEqual({ username: 'harry', name: 'vegetables' });
   });
+
+  // test('insert Category', async () => {
+  //   await petModel.insertCategory(
+  //     {
+  //       name: 'junk food',
+  //       users_id: 1,
+  //     },
+  //     1
+  //   );
+  //   const data = await petModel.findCategoryById(1, 7);
+
+  //   expect(data.name).toBe('junk food');
+  // });
 });

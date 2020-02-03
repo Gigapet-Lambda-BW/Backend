@@ -3,7 +3,7 @@ const db = require('../data/db-config');
 module.exports = {
   findCategories,
   findCategoryById,
-  //insertCategory,
+  insertCategory,
 };
 
 function findCategories(id) {
@@ -15,9 +15,16 @@ function findCategories(id) {
 
 function findCategoryById(id, catId) {
   return db('users as u')
+    .join('categories as c', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .join('categories as c')
-    .where('c.id', catId)
+    .andWhere('c.users_id', catId)
     .select('u.username', 'c.name')
     .first();
+}
+
+// ! mod to not need userId in production!!!
+async function insertCategory(category, userId) {
+  const [id] = await db('categories').insert(category);
+
+  return findCategoryById(userId, id);
 }
