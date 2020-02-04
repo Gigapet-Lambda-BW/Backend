@@ -56,4 +56,26 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.put('/:catId', async (req, res) => {
+  const { id, catId } = req.params;
+  const { name } = req.body;
+
+  if (!name) {
+    return res
+      .status(400)
+      .json({ message: 'category name required to update' });
+  }
+  const updateCat = {
+    name: name,
+    users_id: id,
+  };
+  try {
+    const updateCategory = await catModel.updateCategory(updateCat, catId, id);
+    res.status(200).json(updateCategory);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ errorMessage: 'server error, updating category' });
+  }
+});
+
 module.exports = router;

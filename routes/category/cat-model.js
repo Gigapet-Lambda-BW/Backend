@@ -29,12 +29,12 @@ async function insertCategory(category, userId) {
   return findCategoryById(userId, catId);
 }
 
-async function updateCategory(category, id, catId) {
+async function updateCategory(category, catId, userId) {
   await db('categories')
-    .where({ id })
+    .where('id', catId)
     .update(category);
 
-  return findCategoryById(id, catId);
+  return findCategoryById(userId, catId);
 }
 
 //! FK constraint will not let this occur.
