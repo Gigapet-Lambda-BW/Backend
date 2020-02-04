@@ -5,6 +5,7 @@ module.exports = {
   displayFoodsByUserId,
   foodById,
   updateFood,
+  deleteFood,
 };
 
 function displayAllFoods() {
@@ -36,4 +37,10 @@ async function updateFood(food, id) {
     .update(food);
 
   return foodById(id);
+}
+
+function deleteFood(id) {
+  return db('foods')
+    .where({ id })
+    .del();
 }

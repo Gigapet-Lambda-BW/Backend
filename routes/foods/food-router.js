@@ -19,4 +19,6 @@ router.get('/', async (req, res) => {
   }
 });
 
+//!! router.post('/foodId', async (req, res) => {});
+
 module.exports = router;
