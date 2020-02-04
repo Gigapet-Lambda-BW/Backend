@@ -15,8 +15,26 @@ router.get('/', async (req, res, next) => {
         .json({ message: '404 could not find user id with categories' });
     }
   } catch (err) {
+    res
+      .status(500)
+      .json({ errorMessage: 'server error finding category by user id' });
+  }
+});
+
+router.get('/:catId', async (req, res, next) => {
+  const { id, catId } = req.params;
+  try {
+    const category = await catModel.findCategoryById(id, catId);
+    if (category) {
+      res.status(200).json(category);
+    } else {
+      res.status(404).json({ message: 'cannot find category item id' });
+    }
+  } catch (err) {
     console.log(err);
-    next(err);
+    res
+      .status(500)
+      .json({ errorMessage: 'server error finding category by category id' });
   }
 });
 
