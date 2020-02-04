@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const authRouter = require('./auth/auth-router');
+const catRouter = require('./routes/category/cat-router');
 
 const server = express();
 
@@ -10,6 +11,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRouter);
+server.use('/api/category', catRouter);
 
 server.get('/', (req, res) => {
   res.send('Gigapet 7 is alive!');
