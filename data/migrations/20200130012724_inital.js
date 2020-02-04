@@ -16,7 +16,9 @@ exports.up = async function(knex) {
       .integer('users_id')
 
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 
   await knex.schema.createTable('categories', tbl => {
@@ -26,7 +28,9 @@ exports.up = async function(knex) {
       .integer('users_id')
 
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 
   await knex.schema.createTable('foods', tbl => {
@@ -36,12 +40,16 @@ exports.up = async function(knex) {
       .integer('users_id')
 
       .references('id')
-      .inTable('users');
+      .inTable('users')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
     tbl
       .integer('categories_id')
 
       .references('id')
-      .inTable('categories');
+      .inTable('categories')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 
   await knex.schema.createTable('entries', tbl => {
@@ -51,7 +59,9 @@ exports.up = async function(knex) {
       .integer('foods_id')
 
       .references('id')
-      .inTable('foods');
+      .inTable('foods')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 };
 
