@@ -11,7 +11,7 @@ function findCategories(id) {
   return db('categories as c')
     .join('users as u', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .select();
+    .select('u.id', 'u.username', 'c.users_id', 'c.name');
 }
 
 function findCategoryById(id, catId) {
