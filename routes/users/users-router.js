@@ -53,19 +53,19 @@ router.put('/:id', async (req, res, next) => {
 });
 
 // !! cannot delete user due to FK constraint.
-// router.delete('/:id', async (req, res, next) => {
-//   const { id } = req.params;
-//   try {
-//     const del = await userModel.deleteUser(id);
-//     if (del) {
-//       res.status(200).json({ message: `user deleted` });
-//     } else {
-//       res.status(404).json({ message: '404 cannot find user to delete' });
-//     }
-//   } catch (err) {
-//     console.log(err);
-//     next(err);
-//   }
-// });
+router.delete('/:id', async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const del = await userModel.deleteUser(id);
+    if (del) {
+      res.status(200).json({ message: `user deleted` });
+    } else {
+      res.status(404).json({ message: '404 cannot find user to delete' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
 
 module.exports = router;
