@@ -3,6 +3,20 @@ const userModel = require('./users-model');
 
 const router = express.Router();
 
+router.get('/', async (req, res, next) => {
+  try {
+    const data = await userModel.getUsers();
+    if (data) {
+      res.status(200).json(data);
+    } else {
+      res.status(400).json({ message: 'cannot find users data' });
+    }
+  } catch (err) {
+    console.log(err);
+    next(err);
+  }
+});
+
 router.get('/:id', async (req, res, next) => {
   const { id } = req.params;
   try {
