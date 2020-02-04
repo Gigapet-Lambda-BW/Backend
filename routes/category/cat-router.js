@@ -38,4 +38,22 @@ router.get('/:catId', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  const { id } = req.params;
+  if (!req.body.name) {
+    return res.status(400).json({ message: 'category name is required' });
+  }
+  const category = {
+    name: req.body.name,
+    users_id: id,
+  };
+  try {
+    const catName = await catModel.insertCategory(category, id);
+    res.status(201).json(catName);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ errorMessage: 'could not create category' });
+  }
+});
+
 module.exports = router;

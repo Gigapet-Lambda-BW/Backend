@@ -23,11 +23,10 @@ function findCategoryById(id, catId) {
     .first();
 }
 
-// ! mod to not need userId in production!!!
 async function insertCategory(category, userId) {
-  const [id] = await db('categories').insert(category);
+  const [catId] = await db('categories').insert(category);
 
-  return findCategoryById(userId, id);
+  return findCategoryById(userId, catId);
 }
 
 async function updateCategory(category, id, catId) {
