@@ -5,6 +5,7 @@ module.exports = {
   getUserById,
   addUser,
   updateUser,
+  deleteUser,
 };
 
 function getUsers() {
@@ -31,3 +32,10 @@ async function updateUser(user, id) {
 
   return getUserById(id);
 }
+
+// ! cannot delete user due to FK constraint!
+// function deleteUser(id) {
+//   return db('users')
+//     .where({ id })
+//     .del();
+// }
