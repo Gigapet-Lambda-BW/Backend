@@ -12,14 +12,20 @@ function findCategories(id) {
   return db('categories as c')
     .join('users as u', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .select('u.id', 'u.username', 'c.users_id', 'c.name');
+    .select(
+      'u.id as users_id',
+      'u.username',
+      'c.users_id',
+      'c.name',
+      'c.id as category_id'
+    );
 }
 
 function findCategory(id) {
   return db('categories as c')
     .join('users as u', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .select('c.name');
+    .select('c.name as name', 'c.id as category_id');
 }
 
 function findCategoryById(id, catId) {
