@@ -2,6 +2,7 @@ const db = require('../../data/db-config');
 
 module.exports = {
   findCategories,
+  findCategory,
   findCategoryById,
   insertCategory,
   updateCategory,
@@ -11,7 +12,20 @@ function findCategories(id) {
   return db('categories as c')
     .join('users as u', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .select('u.id', 'u.username', 'c.users_id', 'c.name');
+    .select(
+      'u.id as users_id',
+      'u.username',
+      'c.users_id',
+      'c.name',
+      'c.id as category_id'
+    );
+}
+
+function findCategory(id) {
+  return db('categories as c')
+    .join('users as u', 'u.id', 'c.users_id')
+    .where('u.id', id)
+    .select('c.name as name', 'c.id as category_id');
 }
 
 function findCategoryById(id, catId) {
@@ -23,19 +37,18 @@ function findCategoryById(id, catId) {
     .first();
 }
 
-// ! mod to not need userId in production!!!
 async function insertCategory(category, userId) {
-  const [id] = await db('categories').insert(category);
+  const [catId] = await db('categories').insert(category);
 
-  return findCategoryById(userId, id);
+  return findCategoryById(userId, catId);
 }
 
-async function updateCategory(category, id, catId) {
+async function updateCategory(category, catId, userId) {
   await db('categories')
-    .where({ id })
+    .where('id', catId)
     .update(category);
 
-  return findCategoryById(id, catId);
+  return findCategoryById(userId, catId);
 }
 
 //! FK constraint will not let this occur.
