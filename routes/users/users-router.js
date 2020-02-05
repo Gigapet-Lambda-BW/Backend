@@ -1,11 +1,7 @@
 const express = require('express');
 const userModel = require('./users-model');
-const catRouter = require('../category/cat-router');
-const foodRouter = require('../foods/food-router');
-const router = express.Router({ mergeParams: true });
 
-router.use('/:id/category', catRouter);
-router.use('/:id/foods', foodRouter);
+const router = express.Router({ mergeParams: true });
 
 router.get('/', async (req, res, next) => {
   try {

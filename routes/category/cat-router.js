@@ -21,10 +21,28 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:catId', async (req, res, next) => {
-  const { id, catId } = req.params;
+router.get('/:userId', async (req, res) => {
+  const { userId } = req.params;
+
   try {
-    const category = await catModel.findCategoryById(id, catId);
+    const category = await catModel.findCategory(userId);
+    if (category) {
+      res.status(200).json(category);
+    } else {
+      res.status(404).json({ message: 'can not find user' });
+    }
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ errorMessage: 'server error with id for categories display' });
+  }
+});
+
+router.get('/:userId/:catId', async (req, res, next) => {
+  const { userId, catId } = req.params;
+  try {
+    const category = await catModel.findCategoryById(userId, catId);
     if (category) {
       res.status(200).json(category);
     } else {
@@ -39,16 +57,20 @@ router.get('/:catId', async (req, res, next) => {
 });
 
 router.post('/', async (req, res) => {
-  const { id } = req.params;
   if (!req.body.name) {
     return res.status(400).json({ message: 'category name is required' });
   }
+  if (!req.body.users_id) {
+    return res.status(400).json({ message: 'user_id missing but required' });
+  }
+
   const category = {
     name: req.body.name,
-    users_id: id,
+    users_id: req.body.users_id,
   };
   try {
-    const catName = await catModel.insertCategory(category, id);
+    const { users_id } = req.body;
+    const catName = await catModel.insertCategory(category, users_id);
     res.status(201).json(catName);
   } catch (err) {
     console.log(err);
@@ -56,8 +78,8 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:catId', async (req, res) => {
-  const { id, catId } = req.params;
+router.put('/:userId/:catId', async (req, res) => {
+  const { userId, catId } = req.params;
   const { name } = req.body;
 
   if (!name) {
@@ -67,10 +89,14 @@ router.put('/:catId', async (req, res) => {
   }
   const updateCat = {
     name: name,
-    users_id: id,
+    users_id: userId,
   };
   try {
-    const updateCategory = await catModel.updateCategory(updateCat, catId, id);
+    const updateCategory = await catModel.updateCategory(
+      updateCat,
+      catId,
+      userId
+    );
     res.status(200).json(updateCategory);
   } catch (err) {
     console.log(err);

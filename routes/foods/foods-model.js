@@ -4,6 +4,7 @@ module.exports = {
   displayAllFoods,
   displayFoodsByUserId,
   foodById,
+  insertFood,
   updateFood,
   deleteFood,
 };
@@ -27,6 +28,12 @@ function foodById(id) {
     .where({ id })
     .select('name')
     .first();
+}
+
+async function insertFood(food) {
+  const [id] = await db('foods').insert(food);
+
+  return foodById(id);
 }
 
 // !!! alter users_id, cat_id in the route.
