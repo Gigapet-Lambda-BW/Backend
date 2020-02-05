@@ -1,12 +1,25 @@
 const db = require('../../data/db-config');
 
 module.exports = {
+  categories,
   findCategories,
   findCategory,
   findCategoryById,
   insertCategory,
   updateCategory,
 };
+
+function categories() {
+  return db('categories as c')
+    .join('users as u', 'u.id', 'c.users_id')
+    .select(
+      'u.id as users_id',
+      'u.username',
+      'c.users_id',
+      'c.name',
+      'c.id as category_id'
+    );
+}
 
 function findCategories(id) {
   return db('categories as c')
@@ -25,7 +38,7 @@ function findCategory(id) {
   return db('categories as c')
     .join('users as u', 'u.id', 'c.users_id')
     .where('u.id', id)
-    .select('c.name as name', 'c.id as category_id');
+    .select('c.name as name', 'c.id as category_id', 'u.username');
 }
 
 function findCategoryById(id, catId) {

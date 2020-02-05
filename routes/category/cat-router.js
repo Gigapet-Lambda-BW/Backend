@@ -4,9 +4,8 @@ const catModel = require('./cat-model');
 const router = express.Router({ mergeParams: true });
 
 router.get('/', async (req, res, next) => {
-  const { id } = req.params;
   try {
-    const categories = await catModel.findCategories(id);
+    const categories = await catModel.categories();
     if (categories) {
       res.status(200).json(categories);
     } else {
@@ -56,6 +55,9 @@ router.get('/:userId/:catId', async (req, res, next) => {
   }
 });
 
+/**
+ * ! requires user_id in body to post.
+ */
 router.post('/', async (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ message: 'category name is required' });
