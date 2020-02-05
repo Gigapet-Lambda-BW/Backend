@@ -20,7 +20,13 @@ function displayFoodsByUserId(userId) {
     .join('users as u', 'u.id', 'f.users_id')
     .join('categories as c', 'c.id', 'f.categories_id')
     .where('u.id', userId)
-    .select('u.id', 'c.name', 'f.users_id', 'f.categories_id', 'u.username');
+    .select(
+      'u.id as user_id',
+      'c.name as category',
+      'f.name as food',
+      'f.categories_id',
+      'u.username'
+    );
 }
 
 function foodById(id) {
