@@ -62,6 +62,13 @@ exports.up = async function(knex) {
       .inTable('foods')
       .onDelete('CASCADE')
       .onUpdate('CASCADE');
+    tbl
+      .integer('children_id')
+
+      .references('id')
+      .inTable('children')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE');
   });
 };
 
