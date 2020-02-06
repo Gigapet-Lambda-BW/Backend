@@ -1,9 +1,9 @@
 const express = require('express');
 const catModel = require('./cat-model');
-
+const authenticate = require('../../middleware/authenticate');
 const router = express.Router({ mergeParams: true });
 
-router.get('/', async (req, res, next) => {
+router.get('/', authenticate(), async (req, res, next) => {
   try {
     const categories = await catModel.categories();
     if (categories) {
@@ -20,7 +20,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', authenticate(), async (req, res) => {
   const { userId } = req.params;
 
   try {
@@ -38,7 +38,7 @@ router.get('/:userId', async (req, res) => {
   }
 });
 
-router.get('/:userId/:catId', async (req, res, next) => {
+router.get('/:userId/:catId', authenticate(), async (req, res, next) => {
   const { userId, catId } = req.params;
   try {
     const category = await catModel.findCategoryById(userId, catId);
@@ -58,7 +58,7 @@ router.get('/:userId/:catId', async (req, res, next) => {
 /**
  * ! requires user_id in body to post.
  */
-router.post('/', async (req, res) => {
+router.post('/', authenticate(), async (req, res) => {
   if (!req.body.name) {
     return res.status(400).json({ message: 'category name is required' });
   }
@@ -80,7 +80,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:userId/:catId', async (req, res) => {
+router.put('/:userId/:catId', authenticate(), async (req, res) => {
   const { userId, catId } = req.params;
   const { name } = req.body;
 

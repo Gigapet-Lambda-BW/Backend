@@ -1,8 +1,9 @@
 const express = require('express');
 const foodModel = require('./foods-model');
 const router = express.Router({ mergeParams: true });
+const authenticate = require('../../middleware/authenticate');
 
-router.get('/:userId', async (req, res) => {
+router.get('/:userId', authenticate(), async (req, res) => {
   const { userId } = req.params;
   try {
     const userFood = await foodModel.displayFoodsByUserId(userId);
@@ -21,7 +22,7 @@ router.get('/:userId', async (req, res) => {
 
 //!! requires category in drop down to call it.
 //!! requires user to be picked for them or they pick them and put in POST
-router.post('/', async (req, res) => {
+router.post('/', authenticate(), async (req, res) => {
   const { name, users_id, categories_id } = req.body;
   if (!name) {
     res.status(400).json({ message: 'food insert requires a name' });
@@ -47,7 +48,7 @@ router.post('/', async (req, res) => {
 });
 //!! requires users_id and categories_id for update to be inputted.
 //!! use  `/category/:id` to find users_id, category_id
-router.put('/:foodId', async (req, res) => {
+router.put('/:foodId', authenticate(), async (req, res) => {
   const { foodId } = req.params;
   const { name, users_id, categories_id } = req.body;
   if (!foodId) {
@@ -71,7 +72,7 @@ router.put('/:foodId', async (req, res) => {
   }
 });
 
-router.delete('/:foodId', async (req, res) => {
+router.delete('/:foodId', authenticate(), async (req, res) => {
   const { foodId } = req.params;
   try {
     await foodModel.deleteFood(foodId);
