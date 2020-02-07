@@ -1,4 +1,9 @@
 const foodModel = require('./foods-model');
+const db = require('../../data/db-config');
+
+beforeEach(async () => {
+  await db.seed.run();
+});
 
 describe('foods models', () => {
   test('displayAllFoods', async () => {
