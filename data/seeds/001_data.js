@@ -1,4 +1,4 @@
-exports.seed = async function(knex) {
+exports.seed = async function (knex) {
   await knex('users').insert([
     { username: 'harry', password: 'abc123' },
     { username: 'jared', password: 'lambda1' },
@@ -29,11 +29,17 @@ exports.seed = async function(knex) {
     { name: 'sour patch kids', users_id: 3, categories_id: 6 },
   ]);
 
+  await knex('children').insert([
+    { first_name: 'jackie', last_name: 'brown', users_id: 1 },
+    { first_name: 'james', last_name: 'simon', users_id: 2 },
+    { first_name: 'james', last_name: 'smith', users_id: 3 }
+  ])
+
   await knex('entries').insert([
     { date: '2020-02-01', foods_id: 1, children_id: 1 },
     { date: '2020-02-01', foods_id: 2, children_id: 1 },
     { date: '2020-02-01', foods_id: 3, children_id: 2 },
     { date: '2020-02-01', foods_id: 4, children_id: 3 },
-    { date: '2020-01-31', foods_id: 5, children_id: 4 },
+    { date: '2020-01-31', foods_id: 5, children_id: 3 },
   ]);
 };
