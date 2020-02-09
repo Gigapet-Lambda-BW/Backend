@@ -10,7 +10,7 @@ beforeEach(async () => {
 
 describe('register user tests', () => {
   test('verify user is created', async () => {
-    await db('users').truncate();
+    //  await db('users').truncate();
     const res = await supertest(server)
       .post('/api/auth/register')
       .send({ username: 'harry', password: 'abc123' });
@@ -18,12 +18,17 @@ describe('register user tests', () => {
     expect(res.status).toBe(201);
     //! cant get username....undefined
   });
+});
 
+describe('login test', () => {
   //!! recieving 401 for test
   test('log user in', async () => {
     const res = await supertest(server)
       .post('/api/auth/login')
-      .send({ username: 'harry', password: 'abc123' });
+      .send({
+        username: 'harry',
+        password: 'abc123',
+      });
     // console.log(res);
     expect(res.status).toBe(200);
   });
